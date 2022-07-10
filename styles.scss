@@ -1,0 +1,76 @@
+body {
+  font-family: Menlo, Andale Mono, monospace;
+  background: #f0f0f0;
+  color: #444;
+  text-shadow: 1px 1px 0px white;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.container {
+  width: 50%;
+  margin: 4em auto;
+}
+
+$font-size: 140px;
+
+#counter {
+  height: $font-size; width: 180px;
+  overflow: hidden;
+  position: relative;
+  font-size: $font-size;
+  line-height: $font-size;
+  text-align: center;
+  margin: 70px auto;
+  display: block;
+  
+  &::before, &::after {
+    position: absolute;
+    white-space: pre;
+    width: $font-size / 1.75;
+  }
+  
+  // tens
+  &::before {
+    content: "0 \a 1 \a 2 \a 3 \a 4 \a 5";
+    left: 10px;
+    animation: count_tens 60s linear infinite;
+  }
+
+  // ones
+  &::after {
+    content: "0 \a 1 \a 2 \a 3 \a 4 \a 5 \a 6 \a 7 \a 8 \a 9";
+    right: 10px;
+    animation: count_secs 10s linear infinite;
+  }
+}
+
+@keyframes count_tens {
+  @for $i from 0 through 5 {
+    $r: $i/6;
+    #{$r*100%} { transform: translateY($i*$font-size*-1); }
+    #{$r*100% + 16.666%} { transform: translateY($i*$font-size*-1); }
+  }
+} 
+
+@keyframes count_secs {
+  @for $i from 0 through 9 {
+    $r: $i/10;
+    #{$r*100%} { transform: translateY($i*$font-size*-1); }
+    #{$r*100% + 9.999%} { transform: translateY($i*$font-size*-1); }
+  }
+} 
+
+
+// potentially add ticking using the loop below
+@keyframes counter {
+  @for $i from 0 through 100 {
+    $r: $i/60;
+    #{$r*100%} { transform: translateY($r*-100%); }
+    #{$r*100%+0.5} { transform: translateY($r*-100%); }
+  }
+}
